@@ -3,15 +3,13 @@ package pers.ocean.client;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.parser.ParserConfig;
 import okhttp3.MediaType;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
 import pers.ocean.api.*;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -89,16 +87,17 @@ public class RpcClient {
          * @param url 目标地址
          * @return RpcResponse
          */
-        private RpcResponse post(RpcRequest req, String url) throws IOException {
-            String reqJson = JSON.toJSONString(req);
-
+        private RpcResponse post(RpcRequest req, String url) throws IOException, URISyntaxException, InterruptedException {
             // TODO ocean_wll 发起http请求，这块可以改成netty通讯
-            OkHttpClient client = new OkHttpClient();
-            final Request request = new Request.Builder()
-                    .url(url)
-                    .post(RequestBody.create(JSON_TYPE, reqJson))
-                    .build();
-            String respJson = client.newCall(request).execute().body().string();
+//            String reqJson = JSON.toJSONString(req);
+//            OkHttpClient client = new OkHttpClient();
+//            final Request request = new Request.Builder()
+//                    .url(url)
+//                    .post(RequestBody.create(JSON_TYPE, reqJson))
+//                    .build();
+//            String respJson = client.newCall(request).execute().body().string();
+            NettyHttpClient client = new NettyHttpClient();
+            String respJson = (String) client.sendRequest(url, req);
             return JSON.parseObject(respJson, RpcResponse.class);
         }
     }

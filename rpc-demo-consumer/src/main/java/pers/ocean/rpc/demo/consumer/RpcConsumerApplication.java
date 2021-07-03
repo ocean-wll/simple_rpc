@@ -25,11 +25,11 @@ public class RpcConsumerApplication {
     public static void main(String[] args) {
 
         // TODO ocean_wll 后续可以改成直接根据name去获取service
-        UserService userService = RpcClient.create(UserService.class, "http://127.0.0.1:8080/", new OceanFilter());
+        UserService userService = RpcClient.create(UserService.class, "http://127.0.0.1:9000/", new OceanFilter());
         User user = userService.findById(1);
         System.out.println("find user id = 1 from server: " + user.getName());
 
-        OrderService orderService = RpcClient.create(OrderService.class, "http://127.0.0.1:8080/", new OceanFilter());
+        OrderService orderService = RpcClient.create(OrderService.class, "http://127.0.0.1:9000/", new OceanFilter());
         Order order = orderService.findById(1);
         System.out.println("find order id = 1 from server: " + order.getName());
 

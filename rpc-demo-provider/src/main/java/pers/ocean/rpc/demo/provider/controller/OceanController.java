@@ -20,6 +20,7 @@ public class OceanController {
     @Autowired
     private RpcInvoker rpcInvoker;
 
+
     @PostMapping("/")
     public RpcResponse invoke(@RequestBody RpcRequest rpcRequest) {
         return rpcInvoker.invoke(rpcRequest);
