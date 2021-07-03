@@ -56,6 +56,7 @@ public class NettyHttpClient {
         //连接服务器
         ChannelFuture future = client.connect(url1.getHost(), url1.getPort()).sync();
 
+        // TODO ocean_wll 这里不是很清楚为什么必须加上 \r\n 才行，不加是不能通信的，网上的资料好像说加了这个才能去编码解码
         future.channel().writeAndFlush(JSON.toJSONString(param) + "\r\n");
 
         //当通道关闭了，就继续往下走

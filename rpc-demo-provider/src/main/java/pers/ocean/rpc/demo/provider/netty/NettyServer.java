@@ -95,6 +95,7 @@ class SimpleServerHandler extends ChannelInboundHandlerAdapter {
         buf.writeBytes(JSON.toJSONString(response).getBytes());
         ctx.channel().writeAndFlush(buf);
 
+        // TODO ocean_wll 这里不是很清楚为什么必须加上 \r\n 才行，不加是不能通信的，网上的资料好像说加了这个才能去编码解码
         ByteBuf buf2 = Unpooled.buffer();
         buf2.writeBytes("\r\n".getBytes());
         ctx.channel().writeAndFlush(buf2);
